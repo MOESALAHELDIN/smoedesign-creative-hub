@@ -28,7 +28,7 @@ export default function Home() {
   const [comment, setComment] = useState('')
   const [notice, setNotice] = useState('')
   const [clientStage, setClientStage] = useState<'intake' | 'dashboard'>('intake')
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<'dark' | 'light'>('light')
 
   if (mode === 'landing') return <Landing theme={theme} onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')} onInternal={() => { setMode('internal'); setView('overview') }} onClient={() => { setMode('client'); setClientStage('intake') }} />
   if (mode === 'client' && clientStage === 'intake') return <ClientIntake onComplete={() => setClientStage('dashboard')} />
