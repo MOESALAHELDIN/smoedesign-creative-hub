@@ -1,0 +1,12 @@
+'use client';
+import {useState} from 'react';
+import {capabilities} from '@/lib/capabilities';
+export default function Home(){
+ const [sent,setSent]=useState(false);
+ async function submit(e:React.FormEvent<HTMLFormElement>){e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget));const r=await fetch('/api/intake',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});setSent(r.ok);if(r.ok)e.currentTarget.reset()}
+ return <main className="shell"><nav className="nav"><div className="brand">SMOEDESIGN</div><div className="navmeta">Creative Hub / 01</div></nav>
+ <section className="hero"><div className="eyebrow">SMOEDESIGN Creative Hub</div><h1>Ideas into work.<br/>Work into value.</h1><p>A connected creative operating layer for strategy, design, technology, growth and client delivery — coordinated through Hana.</p></section>
+ <section className="section"><div className="sectionhead"><h2>Capabilities</h2><p>One system. Eight capabilities. The right team assembled around the problem, not the org chart.</p></div><div className="grid">{capabilities.map(([n,t,d])=><article className="card" key={n}><span className="num">{n}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div></section>
+ <section className="cta" id="start"><div className="ctaInner"><div><div className="eyebrow">Start a project</div><h2>Tell Hana what you’re trying to build.</h2></div><form className="form" onSubmit={submit}><h3>Project intake</h3><div className="field"><label>Name</label><input name="name" required /></div><div className="field"><label>Work email</label><input type="email" name="email" required /></div><div className="field"><label>Company</label><input name="company" /></div><div className="field"><label>What do you need?</label><select name="capability" defaultValue=""><option value="" disabled>Select a capability</option>{capabilities.map(([n,t])=><option key={n} value={t}>{t}</option>)}</select></div><div className="field"><label>Brief</label><textarea name="brief" required placeholder="What are you trying to achieve? Include context, goals, timing and constraints." /></div><button className="submit">Send to Hana →</button>{sent&&<div className="status">Received. Hana can now triage the brief and route the work.</div>}</form></div></section>
+ <footer className="footer"><span>SMOEDESIGN / Creative Hub</span><span>Strategy · Design · Development · Growth</span></footer></main>
+}
